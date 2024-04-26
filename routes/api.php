@@ -33,7 +33,7 @@ Route::group([
 ], function () {
     Route::GET('/', [UserController::class, 'index']);
     Route::POST('/', [UserController::class, 'store']);
-    Route::GET('/{id}', [UserController::class, 'show'])->middleware('update-user');
-    Route::PUT('/{id}', [UserController::class, 'update']);
+    Route::GET('/{id}', [UserController::class, 'show']);
+    Route::PUT('/{id}', [UserController::class, 'update'])->middleware('update-user');;
     Route::DELETE('/{id}', [UserController::class, 'destroy']);
 });

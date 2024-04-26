@@ -15,12 +15,12 @@ enum Role: int
     public const ADMIN = 2;
 
     /**
-     * Role root admin
+     * Role Store
      */
     public const STORE = 3;
 
     /**
-     * Role Guest.
+     * Role Staff.
      */
     public const STAFF = 4;
 }

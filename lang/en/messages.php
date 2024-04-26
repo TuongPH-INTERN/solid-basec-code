@@ -16,4 +16,6 @@ return [
     'error' => 'Error.',
     'not_found' => 'Not found.',
     'invalid_parameters' => 'Invalid parameters.',
+    'access_denied' => 'Access denied',
+    'unauthorized' => 'Unauthorized'
 ];

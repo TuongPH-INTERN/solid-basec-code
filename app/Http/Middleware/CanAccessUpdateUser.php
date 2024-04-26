@@ -6,6 +6,7 @@ use App\Enums\Role;
 use App\Repositories\User\UserRepository;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CanAccessUpdateUser
@@ -22,8 +23,8 @@ class CanAccessUpdateUser
         $userId = $request->route('id');
         $authId = Auth::user()->id;
 
-        if (!$request->hasHeader('Authorization')) {                        //Login requied
-            return response()->json(['message' => 'Unauthorized'], 401);
+        if (!$request->hasHeader('Authorization')) {                //Login requied
+            return response()->json(['message' => __('messages.unauthorized')], Response::HTTP_UNAUTHORIZED);
         }
 
         switch (Auth::user()->role_id) {
@@ -33,7 +34,7 @@ class CanAccessUpdateUser
 
             case Role::STORE:
                 $findUser = resolve(UserRepository::class)->find($userId);
-                if ($userId == $authId || $findUser->role_id == 4) {
+                if ($userId == $authId || $findUser->role_id == Role::STAFF) {
                     return $next($request);
                 }
                 break;
@@ -45,9 +46,9 @@ class CanAccessUpdateUser
                 break;
 
             default:
-                return response()->json(['message' => 'Access denied'], 403);
+                return response()->json(['message' => __('messages.access_denied')], Response::HTTP_FORBIDDEN);
         }
 
-        return response()->json(['message' => 'Access denied'], 403);
+        return response()->json(['message' => __('messages.access_denied')], Response::HTTP_FORBIDDEN);
     }
 }
